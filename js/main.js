@@ -13,17 +13,17 @@ $(document).ready(function() {
 	var KeypressFunctions = [];
 	KeypressFunctions[119] = function press_up(){
 		move_up();
-		spawn_tile();
-		draw_tiles();
-		if (!find_empty_pos())
-			console.log("GAME OVER")
+	}
+
+	KeypressFunctions[100] = function press_right(){
+		move_right();
 	}
 
 	// spawns tile at random empty position, 1 in X have value 4
 	function spawn_tile(){
 		// create tile object
 		var new_pos = find_empty_pos();
-		var tile = {val: 2, pos: new_pos}
+		var tile = {val: 2, pos: new_pos, done: false}
 
 		// add to board array
 		board[tile.pos] = tile;
@@ -33,6 +33,10 @@ $(document).ready(function() {
   	function start_turn(event){
  		if (KeypressFunctions[event.which]) {
     		KeypressFunctions[event.which].call();
+    		spawn_tile();
+			draw_tiles();
+			// if (!find_empty_pos())
+			// 	console.log("GAME OVER")
     	}
   	}
 
@@ -47,21 +51,47 @@ $(document).ready(function() {
   		return all_empty[Math.round(Math.random()*(all_empty.length-1))];
   	}
 
+  	// moves (or merges) all tiles one step right if possible 
   	function move_up() {
-  		for (var i = 4; i < 16; i++) {
-  			if(board[i] != 0) {
-  				if(board[i].val == board[i-4].val) {
-  					var new_val = board[i-4].val*2;
-  					board[i-4].val = new_val;
-  					score = score + new_val;
-  					console.log(score);
-  					board[i] = 0;
-  				} else if(board[i-4] == 0) {
-  					board[i-4] = board[i];
-  					board[i] = 0;
+  		for (var k = 1; k < 5; k++) {
+	  		for (var i = 4; i < 16; i++) {
+	  			if(board[i] != 0 && board[i].done == false) {
+	  				if(board[i].val == board[i-4].val) {
+	  					merge(i,-4);
+	  				} else if(board[i-4] == 0) {
+	  					move(i,-4);
+	  				} else {
+	  					board[i].done = true;
+	  				}
+	        	}
+	  		}
+	  	}
+  	}
+
+  	// moves (or merges) all tiles one step right if possible 
+  	function move_right() {
+  		for (var i = 14; i > -1; i--) {
+  			if(board[i] != 0 && i % 4 != 3) {
+  				if(board[i].val == board[i+1].val) {
+  					merge(i,1);
+  				} else if(board[i+1] == 0) {
+  					move(i,1);
   				}
         	}
   		}
+  	}
+
+  	function merge(i,step) {
+  		var new_val = board[i+step].val*2;
+  		board[i+step].val = new_val;
+  		score = score + new_val;
+  		console.log(score);
+  		board[i] = 0;
+  	}
+
+  	function move(i,step) {
+  		board[i+step] = board[i];
+  		board[i] = 0;
   	}
 
   	// cathes keypress
@@ -70,6 +100,7 @@ $(document).ready(function() {
 	// draws all tiles 
 	function draw_tiles() {
 		for (var i = 0; i < 16; i++) {
+			board[i].done = false;
 			var val = board[i].val;
 			if(val){
 				$(tile_str.concat(String(i))).css("background-color","green");
