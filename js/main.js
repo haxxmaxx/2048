@@ -4,6 +4,7 @@ $(document).ready(function() {
 	var tile_str = "#tile-";
 	var val_str = "#value-"
 	var board = Array.apply(null,Array(16)).map(Number.prototype.valueOf,0);
+	var score = 0;
 
 	// spawn first tiles
 	//spawn_tile(); spawn_tile(); draw_tiles();
@@ -14,6 +15,8 @@ $(document).ready(function() {
 		move_up();
 		spawn_tile();
 		draw_tiles();
+		if (!find_empty_pos())
+			console.log("GAME OVER")
 	}
 
 	// spawns tile at random empty position, 1 in X have value 4
@@ -46,9 +49,17 @@ $(document).ready(function() {
 
   	function move_up() {
   		for (var i = 4; i < 16; i++) {
-  			if(board[i] != 0 && board[i-4] == 0) {
-  				board[i-4] = board[i];
-  				board[i] = 0;
+  			if(board[i] != 0) {
+  				if(board[i].val == board[i-4].val) {
+  					var new_val = board[i-4].val*2;
+  					board[i-4].val = new_val;
+  					score = score + new_val;
+  					console.log(score);
+  					board[i] = 0;
+  				} else if(board[i-4] == 0) {
+  					board[i-4] = board[i];
+  					board[i] = 0;
+  				}
         	}
   		}
   	}
