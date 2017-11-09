@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title> Home </title>
+	<meta name="author" content="Max Gefvert">
+	<meta name="description" content="2048 reverse hack">
+	<meta name="keywords" content="game, 2048, puzzle">
+
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link rel="stylesheet" href="css/styles.css">
+	<script src="js/jquery.js"></script>
+	<script src="js/main.js"></script>
+
+</head>
+
+<body>
+<div id="board" class="site">
+<!-- 	<header>
+		<ul>
+			<li><h1><a> Max Gefvert</a></h1></li>
+			<li class="menu-item"><h1><a href="index.html">Home</a></h1></li>
+	    	<li class="menu-item"><h1><a href="about.html">About</a></h1></li>
+		  </ul>
+	</header> -->
+
+<!-- 1st row, 0-3 -->
+<div id="square-0" class="square">
+	<div id="tile-0" class="tile">
+		<h1 id="value-0"></h1>
+	</div>
+</div>	
+<div id="square-1" class="square">
+	<div id="tile-1" class="tile">
+		<h1 id="value-1"></h1>
+	</div>
+</div>
+<div id="square-2" class="square">
+	<div id="tile-2" class="tile">
+		<h1 id="value-2"></h1>
+	</div>
+</div>
+<div id="square-3" class="square">
+	<div id="tile-3" class="tile">
+		<h1 id="value-3"></h1>
+	</div>
+</div>
+<!-- 2nd row 4-7 -->
+<div id="square-4" class="square">
+	<div id="tile-4" class="tile">
+		<h1 id="value-4"></h1>
+	</div>
+</div>	
+<div id="square-5" class="square">
+	<div id="tile-5" class="tile">
+		<h1 id="value-5"></h1>
+	</div>
+</div>
+<div id="square-6" class="square">
+	<div id="tile-6" class="tile">
+		<h1 id="value-6"></h1>
+	</div>
+</div>
+<div id="square-7" class="square">
+	<div id="tile-7" class="tile">
+		<h1 id="value-7"></h1>
+	</div>
+</div>
+<!-- 3nd row 8-11 -->
+<div id="square-8" class="square">
+	<div id="tile-8" class="tile">
+		<h1 id="value-8"></h1>
+	</div>
+</div>	
+<div id="square-9" class="square">
+	<div id="tile-9" class="tile">
+		<h1 id="value-9"></h1>
+	</div>
+</div>
+<div id="square-10" class="square">
+	<div id="tile-10" class="tile">
+		<h1 id="value-10"></h1>
+	</div>
+</div>
+<div id="square-11" class="square">
+	<div id="tile-11" class="tile">
+		<h1 id="value-11"></h1>
+	</div>
+</div>
+<!-- 2nd row 12-15 -->
+<div id="square-12" class="square">
+	<div id="tile-12" class="tile">
+		<h1 id="value-12"></h1>
+	</div>
+</div>	
+<div id="square-13" class="square">
+	<div id="tile-13" class="tile">
+		<h1 id="value-13"></h1>
+	</div>
+</div>
+<div id="square-14" class="square">
+	<div id="tile-14" class="tile">
+		<h1 id="value-14"></h1>
+	</div>
+</div>
+<div id="square-15" class="square">
+	<div id="tile-15" class="tile">
+		<h1 id="value-15"></h1>
+	</div>
+</div>
+
+	
+	<footer></footer>
+</div>
+</body>
+
+<!-- <script>
+	function keyListener(event){ 
+	    //whatever we want to do goes in this block
+	    event = event || window.event; //capture the event, and ensure we have an event
+	    var key = event.key || event.which || event.keyCode; //find the key that was pressed
+	    //MDN is better at this: https://developer.mozilla.org/en-US/docs/DOM/event.which
+	    if(key===84){ //this is for 'T'
+	        document.getElementById("tile-11").style.backgroundColor = "blue";
+	    }
+	  }
+
+	  /* the last example replace this one */
+
+	  var el = window; //we identify the element we want to target a listener on
+	  //remember IE can't capture on the window before IE9 on keypress.
+
+	  var eventName = 'keypress'; //know which one you want, this page helps you figure that out: http://www.quirksmode.org/dom/events/keys.html
+	  //and here's another good reference page: http://unixpapa.com/js/key.html
+	  //because you are looking to capture for things that produce a character
+	  //you want the keypress event.
+
+	  //we are looking to bind for IE or non-IE, 
+	  //so we have to test if .addEventListener is supported, 
+	  //and if not, assume we are on IE. 
+	  //If neither exists, you're screwed, but we didn't cover that in the else case.
+	  if (el.addEventListener) {
+	    el.addEventListener('click', keyListener, false); 
+	  } else if (el.attachEvent)  {
+	    el.attachEvent('on'+eventName, keyListener);
+	  }
+
+	  //and at this point you're done with registering the function, happy monitoring
+
+</script> -->
+</html>
