@@ -1,25 +1,29 @@
 $(document).ready(function() {
 
-	// all functions called from keypress
+	// global variables
 	var tile_str = "#tile-";
 	var val_str = "#value-"
-	var KeypressFunctions = [];
 	var board = Array.apply(null,Array(16)).map(Number.prototype.valueOf,0);
 
-	KeypressFunctions[119] = function spawn_tile(){
-		var new_pos = find_empty_pos(board);
-		//var new_pos = Math.round(Math.random()*15);
+	// spawn first tiles
+	//spawn_tile(); spawn_tile(); draw_tiles();
 
-		console.log(new_pos)
+	// all functions called from keypress
+	var KeypressFunctions = [];
+	KeypressFunctions[119] = function press_up(){
+		move_up();
+		spawn_tile();
+		draw_tiles();
+	}
 
+	// spawns tile at random empty position, 1 in X have value 4
+	function spawn_tile(){
+		// create tile object
+		var new_pos = find_empty_pos();
 		var tile = {val: 2, pos: new_pos}
-		board[tile.pos] = tile;
-		var tile_str_tot = tile_str.concat(String(new_pos));
-		var tile_val_tot = val_str.concat(String(new_pos));
 
-		//console.log(tile_str_tot)
-		$(tile_str_tot).css("background-color","green");
-        $(tile_val_tot).text(tile.val);
+		// add to board array
+		board[tile.pos] = tile;
 	}
 
 	// calls function cooresponging to key
@@ -29,18 +33,41 @@ $(document).ready(function() {
     	}
   	}
 
-  	function find_empty_pos(board) {
+  	// returns random empty position
+  	function find_empty_pos() {
   		var all_empty = [];
   		for (var i = 0; i < 16; i++) {
   			if (board[i] == 0) {
-				console.log(i)
   				all_empty.push(i);
   			}
   		}
-		console.log(all_empty)
   		return all_empty[Math.round(Math.random()*(all_empty.length-1))];
+  	}
+
+  	function move_up() {
+  		for (var i = 4; i < 16; i++) {
+  			if(board[i] != 0 && board[i-4] == 0) {
+  				board[i-4] = board[i];
+  				board[i] = 0;
+        	}
+  		}
   	}
 
   	// cathes keypress
 	$(document).keypress(start_turn);
+
+	// draws all tiles 
+	function draw_tiles() {
+		for (var i = 0; i < 16; i++) {
+			var val = board[i].val;
+			if(val){
+				$(tile_str.concat(String(i))).css("background-color","green");
+	        	$(val_str.concat(String(i))).text(val);
+			} else {
+				$(tile_str.concat(String(i))).css("background-color","red");
+	        	$(val_str.concat(String(i))).text("");
+			}
+		}
+	}
+
 });
