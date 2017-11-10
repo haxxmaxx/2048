@@ -1,22 +1,47 @@
-
+body {
+    background-color: black
+}
 h1 {
     font-family: "Futura", Arial, sans-serif;
+    color: white;
 }
 
 .site {
+    margin:0 auto;
+    width:50%;
+    min-width: 100px;
+    padding: 0;
+}
+
+.title {
+    float: left;
+    width: 50%;
+}
+
+.score {
+    float: right;
+    text-align: right;
+}
+
+.score-constant {
+    margin-bottom: 0;
+}
+
+.score-value {
+    margin-top: 0;
+}
+
+.instructions{
     width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: 1210px;
-    padding: 0 50px;
+    text-align: center;
 }
 
 .square {
-    float:left;
+    float: left;
     position: relative;
-    width: 20%;
-    padding-bottom: 20%; /* = width for a 1:1 aspect ratio */
-    margin:1.66%;
+    width: 25%;
+    padding-bottom: 25%; /* = width for a 1:1 aspect ratio */
+    margin: 0;
     background-color: gray;
     overflow: hidden;
 }
@@ -50,13 +75,13 @@ h1 {
     background-color: #ffff00;
 }
 .color-16 {
-    background-color: #83ff00;
+    background-color: #afff00;
 }
 .color-32 {
     background-color: #00ff00;
 }
 .color-64 {
-    background-color: #00ff7f;
+    background-color: #00edff;
 }
 .color-128 {
     background-color: #00ffff;

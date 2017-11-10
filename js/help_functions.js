@@ -24,7 +24,7 @@ function move_or_merge(i,step) {
 		var new_val = board.tiles[i].val*2;
 		board.tiles[i+step].val = new_val;
 		board.score = board.score + new_val;
-		console.log(board.score);
+		$("#points").text(String(board.score));
 		board.tiles[i] = 0;
 	} else if(board.tiles[i+step] == 0) {
 		board.tiles[i+step] = board.tiles[i];
@@ -53,7 +53,15 @@ function draw_tile(i) {
 }
 
 function game_over() {
-	alert("GAME OVER");
+	var val_str = "#value-";
+	for (var i = 0; i < 16; i++) {
+		$(val_str.concat(String(i))).text("");
+	}
+	$("#value-4").text("G"); $("#value-5").text("A");
+	$("#value-6").text("M"); $("#value-7").text("E");
+	$("#value-8").text("O"); $("#value-9").text("V");
+	$("#value-10").text("E"); $("#value-11").text("R");
+	$("#instr").text("PRESS ENTER TO RESTART");
 	board.is_running = false;
 }
 
@@ -115,6 +123,7 @@ keypress_functions[13] = function start_game() {
 	};
 	spawn_tile();
 	turn_update();
+	$("#instr").text("USE WASD TO MOVE");
 	board.is_running = true;
 }
 
