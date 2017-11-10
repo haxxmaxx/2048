@@ -1,6 +1,10 @@
 body {
     background-color: black
 }
+
+#my-body {
+    margin: 0;
+}
 h1 {
     font-family: "Futura", Arial, sans-serif;
     color: white;
@@ -8,9 +12,15 @@ h1 {
 
 .site {
     margin:0 auto;
-    width:50%;
+    width:40%;
     min-width: 100px;
     padding: 0;
+}
+
+.board {
+    float: left;
+    width: 40vw;
+    height: 40vw;
 }
 
 .headings {
@@ -34,23 +44,14 @@ h1 {
 .instructions{
     width: 100%;
     text-align: center;
-    font-size: 1.5vw;
-}
-
-.square {
-    float: left;
-    position: relative;
-    width: 25%;
-    padding-bottom: 25%; /* = width for a 1:1 aspect ratio */
-    margin: 0;
-    background-color: gray;
-    overflow: hidden;
+    font-size: 1vw;
 }
 
 .tile {
-    position: absolute;
-    height: 100%; 
-    width: 100%;
+    float:left;
+    width: 10vw;
+    height: 10vw;
+    background-color: #7f7f7f;
 }
 
 .tile h1 {
