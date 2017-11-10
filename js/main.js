@@ -1,8 +1,6 @@
 $(document).ready(function() {
 
 	// global variables
-	var tile_str = "#tile-";
-	var val_str = "#value-"
 	var board = Array.apply(null,Array(16)).map(Number.prototype.valueOf,0);
 	var score = 0;
 
@@ -11,16 +9,24 @@ $(document).ready(function() {
 
 	// all functions called from keypress
 	var KeypressFunctions = [];
-	KeypressFunctions[119] = function press_up(){
+	KeypressFunctions[119] = function press_up() {
 		move_up();
 	}
 
-	KeypressFunctions[100] = function press_right(){
+	KeypressFunctions[115] = function press_down() {
+		move_down();
+	}
+
+	KeypressFunctions[100] = function press_right() {
 		move_right();
 	}
 
+	KeypressFunctions[97] = function press_left() {
+		move_left();
+	}
+
 	// spawns tile at random empty position, 1 in X have value 4
-	function spawn_tile(){
+	function spawn_tile() {
 		// create tile object
 		var new_pos = find_empty_pos();
 		var tile = {val: 2, pos: new_pos, done: false}
@@ -30,7 +36,8 @@ $(document).ready(function() {
 	}
 
 	// calls function cooresponging to key
-  	function start_turn(event){
+  	function start_turn(event) {
+  		console.log(event.which);
  		if (KeypressFunctions[event.which]) {
     		KeypressFunctions[event.which].call();
     		spawn_tile();
@@ -51,9 +58,9 @@ $(document).ready(function() {
   		return all_empty[Math.round(Math.random()*(all_empty.length-1))];
   	}
 
-  	// moves (or merges) all tiles one step right if possible 
+  	// moves (and merges) all tiles up if possible 
   	function move_up() {
-  		for (var k = 1; k < 5; k++) {
+  		for (var k = 1; k < 4; k++) {
 	  		for (var i = 4; i < 16; i++) {
 	  			if(board[i] != 0 && board[i].done == false) {
 	  				if(board[i].val == board[i-4].val) {
@@ -68,16 +75,50 @@ $(document).ready(function() {
 	  	}
   	}
 
-  	// moves (or merges) all tiles one step right if possible 
+  	// moves (and merges) all tiles up if possible 
+  	function move_down() {
+  		for (var k = 1; k < 4; k++) {
+	  		for (var i = 11; i > -1; i--) {
+	  			if(board[i] != 0 && board[i].done == false) {
+	  				if(board[i].val == board[i+4].val) {
+	  					merge(i,4);
+	  				} else if(board[i+4] == 0) {
+	  					move(i,4);
+	  				} else {
+	  					board[i].done = true;
+	  				}
+	        	}
+	  		}
+	  	}
+  	}
+
+  	// moves (or merges) all tiles right if possible 
   	function move_right() {
-  		for (var i = 14; i > -1; i--) {
-  			if(board[i] != 0 && i % 4 != 3) {
-  				if(board[i].val == board[i+1].val) {
-  					merge(i,1);
-  				} else if(board[i+1] == 0) {
-  					move(i,1);
-  				}
-        	}
+  		for (var k = 1; k < 4; k++) {
+	  		for (var i = 14; i > -1; i--) {
+	  			if(board[i] != 0 && i%4 != 3 && board[i].done == false) {
+	  				if(board[i].val == board[i+1].val) {
+	  					merge(i,1);
+	  				} else if(board[i+1] == 0) {
+	  					move(i,1);
+	  				}
+	        	}
+	  		}	
+  		}
+  	}
+
+  	// moves (or merges) all tiles left if possible 
+  	function move_left() {
+  		for (var k = 1; k < 4; k++) {
+	  		for (var i = 1; i < 16; i++) {
+	  			if(board[i] != 0 && i%4 != 0 && board[i].done == false) {
+	  				if(board[i].val == board[i-1].val) {
+	  					merge(i,-1);
+	  				} else if(board[i-1] == 0) {
+	  					move(i,-1);
+	  				}
+	        	}
+	  		}	
   		}
   	}
 
@@ -99,6 +140,8 @@ $(document).ready(function() {
 
 	// draws all tiles 
 	function draw_tiles() {
+		var tile_str = "#tile-";
+		var val_str = "#value-"
 		for (var i = 0; i < 16; i++) {
 			board[i].done = false;
 			var val = board[i].val;
