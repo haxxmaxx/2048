@@ -3,79 +3,109 @@ $(document).ready(function() {
 	// global variables
 	var board = Array.apply(null,Array(16)).map(Number.prototype.valueOf,0);
 	var score = 0;
+	var is_up_legal = true;
+	var is_down_legal = true;
+	var is_left_legal = true;
+	var is_right_legal = true;
 
 	// spawn first tiles
 	//spawn_tile(); spawn_tile(); draw_tiles();
 
 	// all functions called from keypress
-	var KeypressFunctions = [];
-	KeypressFunctions[119] = function press_up() {
-		move_up();
+	var keypress_functions = [];
+	keypress_functions[13] = function start_game() {
+		spawn_tile();
+		draw_tiles();
 	}
 
-	KeypressFunctions[115] = function press_down() {
+	keypress_functions[119] = function press_up() {
+		// try to move three times
+ 		for (var k = 1; k <= 3; k++) {
+			move_up();
+		}
+	}
+
+	keypress_functions[115] = function press_down() {
 		move_down();
 	}
 
-	KeypressFunctions[100] = function press_right() {
-		move_right();
-	}
-
-	KeypressFunctions[97] = function press_left() {
+	keypress_functions[97] = function press_left() {
 		move_left();
 	}
 
-	// spawns tile at random empty position, 1 in X have value 4
-	function spawn_tile() {
-		// create tile object
-		var new_pos = find_empty_pos();
-		var tile = {val: 2, pos: new_pos, done: false}
-
-		// add to board array
-		board[tile.pos] = tile;
+	keypress_functions[100] = function press_right() {
+		move_right();
+	}
+	// all legal check functions
+	var legal_functions = [];
+	legal_functions[119] = function legal_up() {
+		is_legal = false;
+		for (var i = 4; i < 16; i++) {
+	  		if(board[i] != 0 &&
+	  			(board[i].val == board[i-4].val || board[i-4] == 0)) {
+	  			console.log("legal")
+	  			return true;
+	       	}
+	  	}
+	  	console.log("illegal")
+	  	return false;
 	}
 
-	// calls function cooresponging to key
-  	function start_turn(event) {
-  		console.log(event.which);
- 		if (KeypressFunctions[event.which]) {
-    		KeypressFunctions[event.which].call();
-    		spawn_tile();
-			draw_tiles();
-			// if (!find_empty_pos())
-			// 	console.log("GAME OVER")
-    	}
-  	}
+	legal_functions[115] = function legal_down() {
+		is_legal = false;
+		for (var i = 11; i > -1; i--) {
+	  		if(board[i] != 0 &&
+	  			(board[i].val == board[i+4].val || board[i+4] == 0)) {
+	  			console.log("legal")
+	  			return true;
+	       	}
+	  	}
+	  	console.log("illegal")
+	  	return false;
+	}
 
-  	// returns random empty position
-  	function find_empty_pos() {
-  		var all_empty = [];
-  		for (var i = 0; i < 16; i++) {
-  			if (board[i] == 0) {
-  				all_empty.push(i);
-  			}
-  		}
-  		return all_empty[Math.round(Math.random()*(all_empty.length-1))];
-  	}
+	legal_functions[97] = function legal_left() {
+		is_legal = false;
+		for (var i = 1; i < 16; i++) {
+	  		if(i%4 != 0 && board[i] != 0 &&
+	  			(board[i].val == board[i-1].val || board[i-1] == 0)) {
+	  			console.log("legal")
+	  			return true;
+	       	}
+	  	}
+	  	console.log("illegal")
+	  	return false;
+	}
 
-  	// moves (and merges) all tiles up if possible 
+	legal_functions[100] = function legal_left() {
+		is_legal = false;
+		for (var i = 14; i > -1; i--) {
+	  		if(i%4 != 3 && board[i] != 0 &&
+	  			(board[i].val == board[i+1].val || board[i+1] == 0)) {
+	  			console.log("legal")
+	  			return true;
+	       	}
+	  	}
+	  	console.log("illegal")
+	  	return false;
+	}
+
+  	// moves (and merges) all tiles once up if possible 
   	function move_up() {
-  		for (var k = 1; k < 4; k++) {
-	  		for (var i = 4; i < 16; i++) {
-	  			if(board[i] != 0 && board[i].done == false) {
-	  				if(board[i].val == board[i-4].val) {
-	  					merge(i,-4);
-	  				} else if(board[i-4] == 0) {
-	  					move(i,-4);
-	  				} else {
-	  					board[i].done = true;
-	  				}
-	        	}
-	  		}
+	  	for (var i = 4; i < 16; i++) {
+	  		if(board[i] != 0 && board[i].done == false) {
+	  			if(board[i].val == board[i-4].val) {
+	  			merge(i,-4);
+	  			} else if(board[i-4] == 0) {
+	  				move(i,-4);
+	  			} else {
+	  				board[i].done = true;
+	  			}
+	       	}
 	  	}
   	}
 
-  	// moves (and merges) all tiles up if possible 
+  	// moves (and merges) all tiles once up if possible 
   	function move_down() {
   		for (var k = 1; k < 4; k++) {
 	  		for (var i = 11; i > -1; i--) {
@@ -92,30 +122,30 @@ $(document).ready(function() {
 	  	}
   	}
 
-  	// moves (or merges) all tiles right if possible 
-  	function move_right() {
+  	// moves (or merges) all tiles once left if possible 
+  	function move_left() {
   		for (var k = 1; k < 4; k++) {
-	  		for (var i = 14; i > -1; i--) {
-	  			if(board[i] != 0 && i%4 != 3 && board[i].done == false) {
-	  				if(board[i].val == board[i+1].val) {
-	  					merge(i,1);
-	  				} else if(board[i+1] == 0) {
-	  					move(i,1);
+	  		for (var i = 1; i < 16; i++) {
+	  			if(i%4 != 0 && board[i] != 0 && board[i].done == false) {
+	  				if(board[i].val == board[i-1].val) {
+	  					merge(i,-1);
+	  				} else if(board[i-1] == 0) {
+	  					move(i,-1);
 	  				}
 	        	}
 	  		}	
   		}
   	}
 
-  	// moves (or merges) all tiles left if possible 
-  	function move_left() {
+  	// moves (or merges) all tiles once right if possible 
+  	function move_right() {
   		for (var k = 1; k < 4; k++) {
-	  		for (var i = 1; i < 16; i++) {
-	  			if(board[i] != 0 && i%4 != 0 && board[i].done == false) {
-	  				if(board[i].val == board[i-1].val) {
-	  					merge(i,-1);
-	  				} else if(board[i-1] == 0) {
-	  					move(i,-1);
+	  		for (var i = 14; i > -1; i--) {
+	  			if(i%4 != 3 && board[i] != 0 && board[i].done == false) {
+	  				if(board[i].val == board[i+1].val) {
+	  					merge(i,1);
+	  				} else if(board[i+1] == 0) {
+	  					move(i,1);
 	  				}
 	        	}
 	  		}	
@@ -154,5 +184,41 @@ $(document).ready(function() {
 			}
 		}
 	}
+
+	// spawns tile at random empty position, 1 in X have value 4
+	function spawn_tile() {
+		// create tile object
+		var new_pos = find_empty_pos();
+		var tile = {val: 2, pos: new_pos, done: false}
+
+		// add to board array
+		board[tile.pos] = tile;
+	}
+
+	// calls function cooresponging to key
+  	function start_turn(event) {
+  		if(event.which == 13) {
+  			keypress_functions[event.which].call();
+  		}
+ 		if (legal_functions[event.which] &&
+ 			legal_functions[event.which].call()) {
+    		keypress_functions[event.which].call();
+    		spawn_tile();
+			draw_tiles();
+			// if (!find_empty_pos())
+			// 	console.log("GAME OVER")
+    	}
+  	}
+
+  	// returns random empty position
+  	function find_empty_pos() {
+  		var all_empty = [];
+  		for (var i = 0; i < 16; i++) {
+  			if (board[i] == 0) {
+  				all_empty.push(i);
+  			}
+  		}
+  		return all_empty[Math.round(Math.random()*(all_empty.length-1))];
+  	}
 
 });
