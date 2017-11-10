@@ -39,7 +39,7 @@ function draw_tile(i) {
 	var val = board.tiles[i].val;
 	var tile_str = "#tile-";
 	var val_str = "#value-";
-	var color_str = "# tile color-";
+	var color_str = "tile color-";
 	tile_str = tile_str.concat(String(i));
 	val_str = val_str.concat(String(i));
 	color_str = color_str.concat(val);
@@ -47,7 +47,7 @@ function draw_tile(i) {
 		$(tile_str).attr("class",color_str);
        	$(val_str).text(val);
 	} else {
-		$(tile_str).attr("class",color_str);
+		$(tile_str).attr("class","tile color-0");
        	$(val_str).text("");
 	}
 }
@@ -70,9 +70,6 @@ function turn_update() {
 	// reset 
 	board.is_legal[119] = false; board.is_legal[115] = false;
 	board.is_legal[97] = false; board.is_legal[100] = false;
-	//  strings for HTML reference
-	var tile_str = "#tile-";
-	var val_str = "#value-";
 	// add tile at empty spot
 	spawn_tile();
 	for (var i = 0; i < 16; i++) {
@@ -124,6 +121,8 @@ keypress_functions[13] = function start_game() {
 	spawn_tile();
 	turn_update();
 	$("#instr").text("USE WASD TO MOVE");
+	$("#points").text("0");
+
 	board.is_running = true;
 }
 

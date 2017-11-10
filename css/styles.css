@@ -13,13 +13,13 @@ h1 {
     padding: 0;
 }
 
-.title {
+.headings {
     float: left;
     width: 50%;
+    font-size: 2vw;
 }
 
 .score {
-    float: right;
     text-align: right;
 }
 
@@ -34,6 +34,7 @@ h1 {
 .instructions{
     width: 100%;
     text-align: center;
+    font-size: 1.5vw;
 }
 
 .square {
@@ -60,6 +61,7 @@ h1 {
     top: 50%;
     transform: translateY(-50%);
     color: black;
+    font-size: 4vw;
 }
 
 .color-0 {
