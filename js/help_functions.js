@@ -28,10 +28,10 @@
 function spawn_tile() {
 	// create tile object
 	var new_pos = find_empty_pos();
-	var tile = {val: 2, pos: new_pos, done: false}
+	var tile = {val: Math.random() < 0.9 ? 2 : 4, done: false}
 
 	// add to board array
-	board.tiles[tile.pos] = tile;
+	board.tiles[new_pos] = tile;
 }
 
 	// draws all tiles 
