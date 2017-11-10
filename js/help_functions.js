@@ -1,40 +1,40 @@
-// merges two tiles, adds sum to score
-	function merge(i,step) {
-		var new_val = board.tiles[i+step].val*2;
-		board.tiles[i+step].val = new_val;
-		board.score = board.score + new_val;
-		console.log(board.score);
-		board.tiles[i] = 0;
-	}
-
-	// moves a tile in one direction, sets old posisiton to 0
-	function move(i,step) {
-		board.tiles[i+step] = board.tiles[i];
-		board.tiles[i] = 0;
-	}
-
-	// returns random empty position
-	function find_empty_pos() {
-		var all_empty = [];
-		for (var i = 0; i < 16; i++) {
-			if (board.tiles[i] == 0) {
-				all_empty.push(i);
-			}
+// returns random empty position
+function find_empty_pos() {
+	var all_empty = [];
+	for (var i = 0; i < 16; i++) {
+		if (board.tiles[i] == 0) {
+			all_empty.push(i);
 		}
-		return all_empty[Math.round(Math.random()*(all_empty.length-1))];
 	}
+	return all_empty[Math.round(Math.random()*(all_empty.length-1))];
+}
 
-	// spawns tile at random empty position, 1 in X have value 4
+// spawns tile at random empty position, 1 in 10 have value 4
 function spawn_tile() {
 	// create tile object
 	var new_pos = find_empty_pos();
-	var tile = {val: Math.random() < 0.9 ? 2 : 4, done: false}
-
+	var tile = {val: Math.random() < 0.9 ? 2 : 4, done: false};
 	// add to board array
 	board.tiles[new_pos] = tile;
 }
 
-	// draws all tiles 
+// moves if adjecent pos is empty, merges if same value
+function move_or_merge(i,step) {
+	if(board.tiles[i].val == board.tiles[i+step].val) {
+		var new_val = board.tiles[i].val*2;
+		board.tiles[i+step].val = new_val;
+		board.score = board.score + new_val;
+		console.log(board.score);
+		board.tiles[i] = 0;
+	} else if(board.tiles[i+step] == 0) {
+		board.tiles[i+step] = board.tiles[i];
+		board.tiles[i] = 0;
+	} else {
+		board.tiles[i].done = true;
+	}
+}
+
+// draws one tile
 function draw_tile(i) {
 	var val = board.tiles[i].val;
 	var tile_str = "#tile-";
@@ -46,6 +46,11 @@ function draw_tile(i) {
 		$(tile_str.concat(String(i))).css("background-color","red");
        	$(val_str.concat(String(i))).text("");
 	}
+}
+
+function game_over() {
+	alert("GAME OVER");
+	board.is_running = false;
 }
 
 // checks which moves are possible for next move and draws tiles
@@ -93,73 +98,54 @@ function turn_update() {
 var keypress_functions = [];
 // starts new game
 keypress_functions[13] = function start_game() {
+	board = {
+		tiles: Array.apply(null,Array(16)).map(Number.prototype.valueOf,0),
+		score: 0,
+		is_legal: [],
+		is_up_legal: false,
+		is_down_legal: false,
+		is_left_legal: false,
+		is_right_legal: false,
+		is_running: false
+	};
 	spawn_tile();
 	spawn_tile();
 	turn_update();
+	board.is_running = true;
 }
 
 ///// moving funcitons, moves (and merges) all tiles up if possible /////
 // up
-	keypress_functions[119] = function move_up() {
-		for (var k = 1; k <= 3; k++) {
+keypress_functions[119] = function move_up() {
+	for (var k = 1; k <= 3; k++) {
   		for (var i = 4; i < 16; i++) {
   			if(board.tiles[i] != 0 && board.tiles[i].done == false) {
-  				if(board.tiles[i].val == board.tiles[i-4].val) {
-  				merge(i,-4);
-  				} else if(board.tiles[i-4] == 0) {
-  					move(i,-4);
-  				} else {
-  					board.tiles[i].done = true;
-  				}
+  				move_or_merge(i,-4)
        		}
   		}
+	}
+}
+// up
+keypress_functions[115] = function move_down() {
+  	for (var i = 11; i > -1; i--) {
+  		if(board.tiles[i] != 0 && board.tiles[i].done == false) {
+  			move_or_merge(i,4)
+       	}
+	}
+}
+// down
+keypress_functions[97] = function move_left() {
+	for (var i = 1; i < 16; i++) {
+		if(i%4 != 0 && board.tiles[i] != 0 && board.tiles[i].done == false) {
+			move_or_merge(i,-1)
+       	}
+	}	
+}
+// left
+keypress_functions[100] = function move_right() {
+	for (var i = 14; i > -1; i--) {
+		if(i%4 != 3 && board.tiles[i] != 0 && board.tiles[i].done == false) {
+			move_or_merge(i,1)
 		}
-	}
-	// up
-	keypress_functions[115] = function move_down() {
-		for (var k = 1; k <= 3; k++) {
-  		for (var i = 11; i > -1; i--) {
-  			if(board.tiles[i] != 0 && board.tiles[i].done == false) {
-  				if(board.tiles[i].val == board.tiles[i+4].val) {
-  					merge(i,4);
-  				} else if(board.tiles[i+4] == 0) {
-  					move(i,4);
-  				} else {
-  					board.tiles[i].done = true;
-  				}
-        	}
-  		}
-  	}
-	}
-	// down
-	keypress_functions[97] = function move_left() {
-		for (var k = 1; k <= 3; k++) {
-  		for (var i = 1; i < 16; i++) {
-  			if(i%4 != 0 && board.tiles[i] != 0 && board.tiles[i].done == false) {
-  				if(board.tiles[i].val == board.tiles[i-1].val) {
-  					merge(i,-1);
-  				} else if(board.tiles[i-1] == 0) {
-  					move(i,-1);
-  				} else {
-  					board.tiles[i].done = true;
-  				}
-        	}
-  		}	
-		}
-	}
-	// left
-	keypress_functions[100] = function move_right() {
-		for (var k = 1; k <= 3; k++) {
-  		for (var i = 14; i > -1; i--) {
-  			if(i%4 != 3 && board.tiles[i] != 0 && board.tiles[i].done == false) {
-  				if(board.tiles[i].val == board.tiles[i+1].val) {
-  					merge(i,1);
-  				} else if(board.tiles[i+1] == 0) {
-  					move(i,1);
-  				} else {
-  					board.tiles[i].done = true;
-  				}
-  			}
-  		}	
-		}
-	}
+	}	
+}
