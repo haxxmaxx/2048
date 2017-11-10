@@ -1,4 +1,4 @@
-// initiate board, board containing all global variables
+// initiate board, object containing all global variables
 var board = {
 	tiles: [],
 	score: 0,
@@ -10,31 +10,26 @@ var board = {
 	is_running: false
 };
 
-// board.is_legal[119] = true;	// = up
-// board.is_legal[115] = true; // = down
-// board.is_legal[97] = true;	// = left
-// board.is_legal[100] = true;	// = right
-
 $(document).ready(function() {
   	// cathes keypress
 	$(document).keypress(turn);
 
 	// calls function corresponding to key
   	function turn(event) {
-  		console.log(board.is_legal[event.which])
 		if (board.is_running && board.is_legal[event.which]) {
   			// try to move 3 times
  			for (var k = 1; k <= 3; k++) {
     			keypress_functions[event.which].call();
     		}
-    		spawn_tile();
+    		// adds tile, display tiles and check possible moves
 			turn_update();
+			//GAME OVER if no possible moves
 			if (!board.is_legal[119] && !board.is_legal[115] &&
 				!board.is_legal[97] && !board.is_legal[100]) {
 				game_over();
 			}
-    	} else if(event.which == 13) {
-    		//starts new game if not started
+		//starts new game if game not running
+    	} else if(event.which == 13) {	
   			keypress_functions[event.which].call();
   			console.log("starting");
   		}

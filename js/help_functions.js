@@ -39,12 +39,16 @@ function draw_tile(i) {
 	var val = board.tiles[i].val;
 	var tile_str = "#tile-";
 	var val_str = "#value-";
+	var color_str = "# tile color-";
+	tile_str = tile_str.concat(String(i));
+	val_str = val_str.concat(String(i));
+	color_str = color_str.concat(val);
 	if(val){
-		$(tile_str.concat(String(i))).css("background-color","green");
-       	$(val_str.concat(String(i))).text(val);
+		$(tile_str).attr("class",color_str);
+       	$(val_str).text(val);
 	} else {
-		$(tile_str.concat(String(i))).css("background-color","red");
-       	$(val_str.concat(String(i))).text("");
+		$(tile_str).attr("class",color_str);
+       	$(val_str).text("");
 	}
 }
 
@@ -61,7 +65,8 @@ function turn_update() {
 	//  strings for HTML reference
 	var tile_str = "#tile-";
 	var val_str = "#value-";
-	
+	// add tile at empty spot
+	spawn_tile();
 	for (var i = 0; i < 16; i++) {
 		// up
 		if(i > 3 && board.tiles[i] != 0 && board.is_legal[119] == false &&
@@ -109,12 +114,11 @@ keypress_functions[13] = function start_game() {
 		is_running: false
 	};
 	spawn_tile();
-	spawn_tile();
 	turn_update();
 	board.is_running = true;
 }
 
-///// moving funcitons, moves (and merges) all tiles up if possible /////
+///// moving funcitons, moves (and merges) all possible tiles /////
 // up
 keypress_functions[119] = function move_up() {
 	for (var k = 1; k <= 3; k++) {
