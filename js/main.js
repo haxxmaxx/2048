@@ -16,7 +16,7 @@ $(document).ready(function() {
 
 	// calls function corresponding to key
   	function turn(event) {
-
+  		console.log(board.is_running)
 		if (board.is_running && board.is_legal[event.which]) {
   			// try to move 3 times
  			for (var k = 1; k <= 3; k++) {
@@ -27,7 +27,7 @@ $(document).ready(function() {
 			//GAME OVER if no possible moves, WIN if 2048 tile is acquired
 			end_game();
 		//starts new game if game not running
-    	} else if(event.which == 13) {	
+    	} else if(!board.is_running && event.which == 13) {	
   			keypress_functions[event.which].call();
   		}
   	}

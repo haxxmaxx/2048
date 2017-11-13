@@ -21,20 +21,22 @@ h1 {
 
 .site {
     margin:0 auto;
-    width: 40%;
+    width: 60vh;
+    padding-left: 5vh;
+    padding-right: 5vh;
 }
 
 .board {
     float: left;
-    width: 40vw;
-    height: 40vw;
+    width: 60vh;
+    height: 60vh;
 }
 
 .headings {
     float: left;
     width: 50%;
-    font-size: 2.5vw;
-    margin: 2vw 0 1vw 0;
+    font-size: 4vh;
+    margin: 3vh 0 2vh 0;
 }
 
 .score {
@@ -53,14 +55,14 @@ h1 {
     float: left;
     width: 100%;
     text-align: center;
-    font-size: 1.5vw;
-    margin: 1vw 0 4vw 0;
+    font-size: 2vh;
+    margin: 2vh 0 4vh 0;
 }
 
 .tile {
     float:left;
-    width: 10vw;
-    height: 10vw;
+    width: 15vh;
+    height: 15vh;
     background-color: hsl(0,0%,90%);
 }
 
@@ -72,7 +74,7 @@ h1 {
     top: 50%;
     transform: translateY(-50%);
     color: black;
-    font-size: 4vw;
+    font-size: 6vh;
 }
 
 .color-2 {

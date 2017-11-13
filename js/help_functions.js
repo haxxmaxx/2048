@@ -13,8 +13,8 @@ function find_empty_pos() {
 function spawn_tile() {
 	// create tile object
 	var new_pos = find_empty_pos();
-	//var tile = {val: Math.random() < 0.9 ? 2 : 4, done: false};
-	var tile = {val: 32, done: false};
+	var tile = {val: Math.random() < 0.9 ? 2 : 4, done: false};
+	//var tile = {val: 32, done: false};
 	// add to board array
 	board.tiles[new_pos] = tile;
 }
@@ -42,7 +42,6 @@ function init_random() {
 		var tile_str = "#tile-";
 		var val = Math.pow(2, Math.round(Math.random()*10)+1)
 		$(tile_str.concat(i)).attr("class",color_str.concat(val));
-	console.log(val);
 	}
 }
 
@@ -75,7 +74,7 @@ function is_win() {
 
 function end_game() {
 	var val_str = "#value-";
-	// win or looe?
+	// do if the game is won or lost
 	if ((!board.is_legal[119] && !board.is_legal[115] &&
 		!board.is_legal[97] && !board.is_legal[100]) || is_win()) {
 		// remove values from board
@@ -84,11 +83,13 @@ function end_game() {
 		}
 		$("#instr").text("PRESS ENTER TO RESTART");
 		board.is_running = false;
+		//win
 		if (is_win()) {
 			$("#value-4").text("2"); $("#value-5").text("0");
 			$("#value-6").text("4"); $("#value-7").text("8");
 			$("#value-8").text("W"); $("#value-9").text("I");
 			$("#value-10").text("N"); $("#value-11").text("!");
+		//lose
 		} else {
 			for (var i = 0; i < 16; i++) {
 				$(val_str.concat(String(i))).text("");
@@ -158,7 +159,6 @@ keypress_functions[13] = function start_game() {
 	turn_update();
 	$("#instr").text("USE WASD TO MOVE");
 	$("#points").text("0");
-
 	board.is_running = true;
 }
 
