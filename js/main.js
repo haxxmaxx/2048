@@ -1,13 +1,18 @@
+// main.js
+// main javascript file for 2048 project
+// game loop is run from here and calls functions in help
+//
+// Max Gefvert, max.gefvert@gmail.com, created 2017-11-09
+
+
+
 // initiate board, object containing all global variables
 var board = {
-	tiles: [],
-	score: 0,
-	is_legal: [],
-	is_up_legal: false,
-	is_down_legal: false,
-	is_left_legal: false,
-	is_right_legal: false,
-	is_running: false
+	tiles: [],			// array storing tile objects
+	hues: [0,30,60,80,120,160,200,230,260,280,310],	// hue values for tiles
+	score: 0,										
+	is_legal: [],		// array with boleans for which moves are possible
+	is_running: false	// true when the game is running
 };
 
 $(document).ready(function() {
@@ -16,7 +21,6 @@ $(document).ready(function() {
 
 	// calls function corresponding to key
   	function turn(event) {
-  		console.log(board.is_running)
 		if (board.is_running && board.is_legal[event.which]) {
   			// try to move 3 times
  			for (var k = 1; k <= 3; k++) {
@@ -24,9 +28,9 @@ $(document).ready(function() {
     		}
     		// adds tile, display tiles and check possible moves
 			turn_update();
-			//GAME OVER if no possible moves, WIN if 2048 tile is acquired
+			// game over if no possible moves, game won if 2048 tile is acquired
 			end_game();
-		//starts new game if game not running
+		// starts new game if game not running
     	} else if(!board.is_running && event.which == 13) {	
   			keypress_functions[event.which].call();
   		}

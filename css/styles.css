@@ -1,3 +1,11 @@
+/*
+styles.css
+CSS-file for 2048 project.
+
+Max Gefvert, max.gefvert@gmail.com, created 2017-11-09
+*/
+
+
 @font-face
 {
 font-family: camingocode;
@@ -75,38 +83,4 @@ h1 {
     transform: translateY(-50%);
     color: black;
     font-size: 6vh;
-}
-
-.color-2 {
-    background-color: hsl(0,100%,70%);
-}
-.color-4 {
-    background-color: hsl(30,100%,70%);
-}
-.color-8 {
-    background-color: hsl(60,100%,70%);
-}
-.color-16 {
-    background-color: hsl(80,100%,70%);
-}
-.color-32 {
-    background-color: hsl(120,100%,70%);
-}
-.color-64 {
-    background-color: hsl(160, 100%,70%);
-}
-.color-128 {
-    background-color: hsl(200,100%,70%);
-}
-.color-256 {
-    background-color: hsl(230,100%,70%);
-}
-.color-512 {
-    background-color: hsl(260,100%,70%);
-}
-.color-1024 {
-    background-color: hsl(280,100%,70%);
-}
-.color-2048 {
-    background-color: hsl(310,100%,70%);
 }
