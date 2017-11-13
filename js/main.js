@@ -10,8 +10,8 @@
 var board = {
 	tiles: [],			// array storing tile objects
 	hues: [0,30,60,80,120,160,200,230,260,280,310],	// hue values for tiles
-	score: 0,										
-	is_legal: [],		// array with boleans for which moves are possible
+	score: 0,			// total score							
+	is_legal: [],		// array with booleans for which moves are possible
 	is_running: false	// true when the game is running
 };
 
@@ -21,6 +21,7 @@ $(document).ready(function() {
 
 	// calls function corresponding to key
   	function turn(event) {
+  		// move only if move is possible and game is running
 		if (board.is_running && board.is_legal[event.which]) {
   			// try to move 3 times
  			for (var k = 1; k <= 3; k++) {
