@@ -13,7 +13,8 @@ function find_empty_pos() {
 function spawn_tile() {
 	// create tile object
 	var new_pos = find_empty_pos();
-	var tile = {val: Math.random() < 0.9 ? 2 : 4, done: false};
+	//var tile = {val: Math.random() < 0.9 ? 2 : 4, done: false};
+	var tile = {val: 32, done: false};
 	// add to board array
 	board.tiles[new_pos] = tile;
 }
@@ -34,6 +35,17 @@ function move_or_merge(i,step) {
 	}
 }
 
+// ranodmizes color for all tiles at window load
+function init_random() {
+	for (var i = 0; i < 16; i++) {
+		var color_str = "tile color-";
+		var tile_str = "#tile-";
+		var val = Math.pow(2, Math.round(Math.random()*10)+1)
+		$(tile_str.concat(i)).attr("class",color_str.concat(val));
+	console.log(val);
+	}
+}
+
 // draws one tile
 function draw_tile(i) {
 	var val = board.tiles[i].val;
@@ -47,22 +59,46 @@ function draw_tile(i) {
 		$(tile_str).attr("class",color_str);
        	$(val_str).text(val);
 	} else {
-		$(tile_str).attr("class","tile color-0");
+		$(tile_str).attr("class","tile");
        	$(val_str).text("");
 	}
 }
 
-function game_over() {
-	var val_str = "#value-";
+function is_win() {
 	for (var i = 0; i < 16; i++) {
-		$(val_str.concat(String(i))).text("");
+		if(board.tiles[i].val == 2048) {
+			return true;
+		}
 	}
-	$("#value-4").text("G"); $("#value-5").text("A");
-	$("#value-6").text("M"); $("#value-7").text("E");
-	$("#value-8").text("O"); $("#value-9").text("V");
-	$("#value-10").text("E"); $("#value-11").text("R");
-	$("#instr").text("PRESS ENTER TO RESTART");
-	board.is_running = false;
+	return false;
+}
+
+function end_game() {
+	var val_str = "#value-";
+	// win or looe?
+	if ((!board.is_legal[119] && !board.is_legal[115] &&
+		!board.is_legal[97] && !board.is_legal[100]) || is_win()) {
+		// remove values from board
+		for (var i = 0; i < 16; i++) {
+			$(val_str.concat(String(i))).text("");
+		}
+		$("#instr").text("PRESS ENTER TO RESTART");
+		board.is_running = false;
+		if (is_win()) {
+			$("#value-4").text("2"); $("#value-5").text("0");
+			$("#value-6").text("4"); $("#value-7").text("8");
+			$("#value-8").text("W"); $("#value-9").text("I");
+			$("#value-10").text("N"); $("#value-11").text("!");
+		} else {
+			for (var i = 0; i < 16; i++) {
+				$(val_str.concat(String(i))).text("");
+				$("#value-4").text("G"); $("#value-5").text("A");
+				$("#value-6").text("M"); $("#value-7").text("E");
+				$("#value-8").text("O"); $("#value-9").text("V");
+				$("#value-10").text("E"); $("#value-11").text("R");
+			}
+		}
+	}
 }
 
 // checks which moves are possible for next move and draws tiles

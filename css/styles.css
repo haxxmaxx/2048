@@ -1,20 +1,27 @@
+@font-face
+{
+font-family: camingocode;
+src: url("CamingoCode-Bold-webfont.woff") format("woff");
+}
+
 body {
-    background-color: black
+    background-color: black;
 }
 
 #my-body {
     margin: 0;
 }
+
 h1 {
-    font-family: "Futura", Arial, sans-serif;
+    font-family: camingocode, Arial, sans-serif;
     color: white;
+    margin: 0;
+    line-height: 1;
 }
 
 .site {
     margin:0 auto;
-    width:40%;
-    min-width: 100px;
-    padding: 0;
+    width: 40%;
 }
 
 .board {
@@ -26,7 +33,8 @@ h1 {
 .headings {
     float: left;
     width: 50%;
-    font-size: 2vw;
+    font-size: 2.5vw;
+    margin: 2vw 0 1vw 0;
 }
 
 .score {
@@ -42,16 +50,18 @@ h1 {
 }
 
 .instructions{
+    float: left;
     width: 100%;
     text-align: center;
-    font-size: 1vw;
+    font-size: 1.5vw;
+    margin: 1vw 0 4vw 0;
 }
 
 .tile {
     float:left;
     width: 10vw;
     height: 10vw;
-    background-color: #7f7f7f;
+    background-color: hsl(0,0%,90%);
 }
 
 .tile h1 {
@@ -65,39 +75,36 @@ h1 {
     font-size: 4vw;
 }
 
-.color-0 {
-    background-color: #7f7f7f;
-}
 .color-2 {
-    background-color: #ff0000;
+    background-color: hsl(0,100%,70%);
 }
 .color-4 {
-    background-color: #ff7f00;
+    background-color: hsl(30,100%,70%);
 }
 .color-8 {
-    background-color: #ffff00;
+    background-color: hsl(60,100%,70%);
 }
 .color-16 {
-    background-color: #afff00;
+    background-color: hsl(80,100%,70%);
 }
 .color-32 {
-    background-color: #00ff00;
+    background-color: hsl(120,100%,70%);
 }
 .color-64 {
-    background-color: #00edff;
+    background-color: hsl(160, 100%,70%);
 }
 .color-128 {
-    background-color: #00ffff;
+    background-color: hsl(200,100%,70%);
 }
 .color-256 {
-    background-color: #0086ff;
+    background-color: hsl(230,100%,70%);
 }
 .color-512 {
-    background-color: #0000ff;
+    background-color: hsl(260,100%,70%);
 }
 .color-1024 {
-    background-color: #7c00ff;
+    background-color: hsl(280,100%,70%);
 }
 .color-2048 {
-    background-color: #ff00ff;
+    background-color: hsl(310,100%,70%);
 }

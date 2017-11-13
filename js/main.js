@@ -16,6 +16,7 @@ $(document).ready(function() {
 
 	// calls function corresponding to key
   	function turn(event) {
+
 		if (board.is_running && board.is_legal[event.which]) {
   			// try to move 3 times
  			for (var k = 1; k <= 3; k++) {
@@ -23,15 +24,11 @@ $(document).ready(function() {
     		}
     		// adds tile, display tiles and check possible moves
 			turn_update();
-			//GAME OVER if no possible moves
-			if (!board.is_legal[119] && !board.is_legal[115] &&
-				!board.is_legal[97] && !board.is_legal[100]) {
-				game_over();
-			}
+			//GAME OVER if no possible moves, WIN if 2048 tile is acquired
+			end_game();
 		//starts new game if game not running
     	} else if(event.which == 13) {	
   			keypress_functions[event.which].call();
-  			console.log("starting");
   		}
   	}
 });

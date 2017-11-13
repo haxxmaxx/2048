@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title> Home </title>
+	<title> 2048 </title>
 	<meta name="author" content="Max Gefvert">
 	<meta name="description" content="2048 reverse hack">
 	<meta name="keywords" content="game, 2048, puzzle">
@@ -16,7 +16,7 @@
 	<script src="js/main.js"></script>
 </head>
 
-<body id="my-body">
+<body id="my-body" onload="init_random();">
 	<div id="my-site" class="site">
 		<div class="headings">
 			<h1>THE<br>2048<br>GAME</h1>
@@ -25,9 +25,7 @@
 			<h1 class="score-constant">&nbsp<br>SCORE</h1>
 			<h1 class="score-value" id="points">0</h1>
 		</div>
-
 		<div id="my-board" class="board">
-			<!-- 1st row, 0-3 -->
 			<div id="tile-0" class="tile">
 				<h1 id="value-0"></h1>
 			</div>
@@ -40,7 +38,6 @@
 			<div id="tile-3" class="tile">
 				<h1 id="value-3"></h1>
 			</div>
-			<!-- 2nd row 4-7 -->
 			<div id="tile-4" class="tile">
 				<h1 id="value-4"></h1>
 			</div>
@@ -56,7 +53,6 @@
 			<div id="tile-8" class="tile">
 				<h1 id="value-8"></h1>
 			</div>
-			<!-- 2nd row 8-11 -->
 			<div id="tile-9" class="tile">
 				<h1 id="value-9"></h1>
 			</div>
@@ -66,7 +62,6 @@
 			<div id="tile-11" class="tile">
 				<h1 id="value-11"></h1>
 			</div>
-			<!-- 2nd row 12-15 -->
 			<div id="tile-12" class="tile">
 				<h1 id="value-12"></h1>
 			</div>
@@ -82,7 +77,7 @@
 		</div>
 
 		<div class="instructions">
-			<h1 id="instr"> PRESS ENTER TO START </h1>
+			<h1 id="instr">PRESS ENTER TO START</h1>
 		</div>
 	</div>
 </body>
