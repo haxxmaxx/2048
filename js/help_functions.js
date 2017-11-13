@@ -1,5 +1,5 @@
 // main.js
-// containing help functions used in 2048 game
+// containing help functions used in 2048 game.
 //
 // Max Gefvert, max.gefvert@gmail.com, created 2017-11-09
 

@@ -1,6 +1,6 @@
 // main.js
-// main javascript file for 2048 project
-// game loop is run from here and calls functions in help
+// Main javascript file for 2048 project.
+// Game loop is run from here and calls functions in help_functions.js.
 //
 // Max Gefvert, max.gefvert@gmail.com, created 2017-11-09
 
