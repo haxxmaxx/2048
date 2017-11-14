@@ -29,11 +29,12 @@ function spawn_tile() {
 // if two tiles are merged, is_merged is set to true
 // this is to make sure tiles don't merge multiple times per turn
 function move_or_merge(i,step) {
+	//merge
 	if(board.tiles[i].val == board.tiles[i+step].val &&
 		!board.tiles[i+step].is_merged) {
 		var new_val = board.tiles[i].val*2;
 		board.tiles[i+step].val = new_val;
-		board.tiles[i+step].done = true;
+		board.tiles[i+step].is_merged = true;
 		board.tiles[i] = 0;
 		// add the sum of the tiles to the total score
 		board.score = board.score + new_val;
@@ -138,7 +139,7 @@ function turn_update() {
        	// draw tile
 		draw_tile(i)
 		// reset tile
-       	board.tiles[i].done = false;
+       	board.tiles[i].is_merged = false;
     }
 }
 
