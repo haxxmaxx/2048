@@ -71,7 +71,7 @@ h1 {
     float:left;
     width: 15vh;
     height: 15vh;
-    background-color: hsl(0,0%,90%);
+    background-color: hsl(0,0,90);
 }
 
 .tile h1 {
